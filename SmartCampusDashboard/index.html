@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Campus Dashboard</title>
+
+  <!-- Font Awesome (ikon) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <!-- Loading overlay -->
+  <div id="loading" class="loading">
+    <div class="loading-spinner" aria-hidden="true"></div>
+    <div class="loading-text">Loading Smart Campus...</div>
+  </div>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-logo" aria-hidden="true">🏫</div>
+      <div>
+        <div class="brand-name">Smart Campus</div>
+        <div class="brand-sub">Dashboard IMK</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a href="#launcher" class="nav-link"><i class="fa-solid fa-grid-2"></i> Launcher</a>
+      <a href="#productivity" class="nav-link"><i class="fa-solid fa-list-check"></i> Produktivitas</a>
+      <a href="#widgets" class="nav-link"><i class="fa-solid fa-table-cells"></i> Widget</a>
+      <a href="#about" class="nav-link"><i class="fa-solid fa-circle-info"></i> Info</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="theme-toggle">
+        <span class="theme-label"><i class="fa-solid fa-moon"></i> Theme</span>
+        <button id="themeBtn" class="theme-btn" type="button" aria-label="Toggle dark/light">🌗</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <button id="sidebarBtn" class="icon-btn" type="button" aria-label="Buka sidebar">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <div class="search-wrap">
+      <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+      <input id="search" class="search" type="search" placeholder="Cari aplikasi..." />
+    </div>
+
+    <div class="clock">
+      <div id="digitalClock" class="clock-time">--:--:--</div>
+      <div id="currentDate" class="clock-date">--</div>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- Welcome Banner -->
+    <section class="hero" aria-label="Welcome banner">
+      <div class="hero-glass">
+        <div class="hero-title">Selamat datang 👋</div>
+        <div class="hero-sub" id="welcomeText">Semoga produktif hari ini.</div>
+        <div class="hero-badges">
+          <span class="badge"><i class="fa-solid fa-wand-magic-sparkles"></i> Glassmorphism UI</span>
+          <span class="badge"><i class="fa-solid fa-bolt"></i> Animasi halus</span>
+          <span class="badge"><i class="fa-solid fa-lock"></i> Tanpa backend</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Launcher -->
+    <section id="launcher" class="section">
+      <div class="section-head">
+        <h2 class="section-title">Launcher Aplikasi</h2>
+        <p class="section-sub">Klik kartu untuk membuka aplikasi favoritmu.</p>
+      </div>
+
+      <div id="grid" class="grid" aria-label="Grid launcher"></div>
+    </section>
+
+    <!-- Productivity -->
+    <section id="productivity" class="section">
+      <div class="section-head">
+        <h2 class="section-title">Productivity</h2>
+        <p class="section-sub">To-Do List & Notes tersimpan otomatis di browser.</p>
+      </div>
+
+      <div class="two-col">
+        <!-- To Do -->
+        <div class="card glass">
+          <div class="card-head">
+            <div>
+              <div class="card-title">To-Do List</div>
+              <div class="card-sub">Tambah, hapus, dan tandai selesai.</div>
+            </div>
+            <div class="pill">localStorage</div>
+          </div>
+
+          <form id="todoForm" class="row" autocomplete="off">
+            <input id="todoInput" class="input" type="text" placeholder="Tambah tugas baru..." required />
+            <button class="btn primary" type="submit"><i class="fa-solid fa-plus"></i> Tambah</button>
+          </form>
+
+          <div id="todoList" class="list" aria-label="Daftar to-do"></div>
+        </div>
+
+        <!-- Notes -->
+        <div class="card glass">
+          <div class="card-head">
+            <div>
+              <div class="card-title">Notes</div>
+              <div class="card-sub">Tulis catatan dan simpan otomatis.</div>
+            </div>
+            <div class="pill">Auto Save</div>
+          </div>
+
+          <textarea id="notesArea" class="textarea" placeholder="Tulis catatan di sini..." rows="10"></textarea>
+          <div class="row">
+            <button id="clearNotes" class="btn danger" type="button"><i class="fa-solid fa-trash"></i> Clear Notes</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Widgets -->
+    <section id="widgets" class="section">
+      <div class="section-head">
+        <h2 class="section-title">Widgets</h2>
+        <p class="section-sub">Clock, tanggal, quotes generator, dan weather dummy UI.</p>
+      </div>
+
+      <div class="widget-grid">
+        <div class="widget card glass">
+          <div class="widget-title"><i class="fa-solid fa-clock"></i> Digital Clock</div>
+          <div class="widget-big" id="widgetClock">--:--:--</div>
+          <div class="widget-muted" id="widgetClockSub">Update setiap detik</div>
+        </div>
+
+        <div class="widget card glass">
+          <div class="widget-title"><i class="fa-regular fa-calendar"></i> Current Date</div>
+          <div class="widget-big" id="widgetDate">--</div>
+          <div class="widget-muted">Hari ini</div>
+        </div>
+
+        <div class="widget card glass">
+          <div class="widget-title"><i class="fa-solid fa-quote-left"></i> Quick Quotes</div>
+          <div class="quote" id="quoteText">—</div>
+          <button id="newQuote" class="btn primary" type="button"><i class="fa-solid fa-rotate"></i> Quote baru</button>
+        </div>
+
+        <div class="widget card glass">
+          <div class="widget-title"><i class="fa-solid fa-cloud-sun"></i> Weather (Dummy)</div>
+          <div class="weather-line"><span class="weather-label">Cuaca</span><span class="weather-value" id="wCond">Cerah</span></div>
+          <div class="weather-line"><span class="weather-label">Suhu</span><span class="weather-value" id="wTemp">28°C</span></div>
+          <div class="weather-line"><span class="weather-label">Lokasi</span><span class="weather-value" id="wLoc">Semarang</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <section id="about" class="footer">
+      <div class="footer-inner">
+        <div class="footer-left">
+          <div class="footer-title">Smart Campus Dashboard</div>
+          <div class="footer-sub">Proyek IMK - Interaksi Manusia dan Komputer</div>
+        </div>
+        <div class="footer-right">
+          <a class="footer-link" href="#launcher">Launcher</a>
+          <a class="footer-link" href="#productivity">Productivity</a>
+          <a class="footer-link" href="#widgets">Widgets</a>
+        </div>
+      </div>
+      <div class="copyright">© <span id="year"></span> Smart Campus</div>
+    </section>
+  </main>
+
+  <!-- Floating Action Button -->
+  <button id="fab" class="fab" type="button" aria-label="Scroll ke atas">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- JS -->
+  <script src="./script.js"></script>
+  <script>
+    // Sembunyikan loading setelah halaman siap
+    window.addEventListener('load', () => {
+      const loading = document.getElementById('loading');
+      if (loading) loading.classList.add('hide');
+    });
+  </script>
+</body>
+</html>
+
